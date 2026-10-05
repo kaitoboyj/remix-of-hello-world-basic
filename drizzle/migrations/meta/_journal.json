@@ -8,6 +8,13 @@
       "when": 1791162293325,
       "tag": "0000_create_wallet_profiles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791162302401,
+      "tag": "0001_secure_wallet_profile_registration",
+      "breakpoints": true
     }
   ]
 }
