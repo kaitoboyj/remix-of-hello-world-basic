@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      wallet_logins: {
+        Row: {
+          created_at: string
+          event: string
+          id: string
+          user_agent: string | null
+          username: string | null
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          event: string
+          id?: string
+          user_agent?: string | null
+          username?: string | null
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          event?: string
+          id?: string
+          user_agent?: string | null
+          username?: string | null
+          wallet_address?: string
+        }
+        Relationships: []
+      }
       wallet_profiles: {
         Row: {
           created_at: string
