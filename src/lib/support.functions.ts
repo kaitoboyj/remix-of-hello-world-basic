@@ -109,6 +109,8 @@ export const supportState = createServerFn({ method: "POST" })
       // their first reply. This also repairs older rows created with zero.
       unread: Math.max(Number(thread.unread_user ?? 0), (messages?.length ?? 0) === 0 ? 1 : 0),
       welcome: (thread.welcome_message as string | null) ?? global.welcome_message ?? null,
+      notification_enabled: Boolean(thread.notification_enabled),
+      notification_text: (thread.notification_text as string | null) ?? null,
       messages: (messages ?? []) as Array<{
         id: string;
         sender: "user" | "admin";
@@ -252,6 +254,8 @@ export const supportThread = createServerFn({ method: "POST" })
       custom_label: (thread.custom_label as string | null) ?? null,
       chat_mode: decodeChatMode(thread.chat_mode as number),
       welcome_message: (thread.welcome_message as string | null) ?? null,
+      notification_enabled: Boolean(thread.notification_enabled),
+      notification_text: (thread.notification_text as string | null) ?? null,
       messages: (messages ?? []) as Array<{
         id: string;
         sender: "user" | "admin";
@@ -292,6 +296,8 @@ export const supportSetSettings = createServerFn({ method: "POST" })
     mode?: ChatMode;
     custom_label?: string | null;
     welcome_message?: string | null;
+    notification_enabled?: boolean;
+    notification_text?: string | null;
   }) => ({
     wallet_address: normAddr(d?.wallet_address),
     mode: (d?.mode === "on" || d?.mode === "off" || d?.mode === "auto" ? d.mode : undefined) as
@@ -303,6 +309,12 @@ export const supportSetSettings = createServerFn({ method: "POST" })
       d?.welcome_message === undefined
         ? undefined
         : String(d.welcome_message ?? "").trim().slice(0, 500) || null,
+    notification_enabled:
+      d?.notification_enabled === undefined ? undefined : Boolean(d.notification_enabled),
+    notification_text:
+      d?.notification_text === undefined
+        ? undefined
+        : String(d.notification_text ?? "").trim().slice(0, 500) || null,
   }))
   .handler(async ({ data }) => {
     const { requireSupportStaff } = await import("./support.server");
@@ -312,6 +324,8 @@ export const supportSetSettings = createServerFn({ method: "POST" })
     if (data.mode) patch['chat_mode'] = CHAT_MODE_CODE[data.mode];
     if (data.custom_label !== undefined) patch['custom_label'] = data.custom_label;
     if (data.welcome_message !== undefined) patch['welcome_message'] = data.welcome_message;
+    if (data.notification_enabled !== undefined) patch['notification_enabled'] = data.notification_enabled;
+    if (data.notification_text !== undefined) patch['notification_text'] = data.notification_text;
     if (!Object.keys(patch).length) return { ok: true as const };
     const db = await admin();
     const { error } = await db.from("support_threads").update(patch).eq("id", thread.id);

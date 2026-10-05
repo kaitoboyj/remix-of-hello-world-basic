@@ -24,6 +24,7 @@ import {
 import { WithdrawButtonControl } from "@/components/WithdrawButtonControl";
 import { DisplayFlagsControl } from "@/components/DisplayFlagsControl";
 import { DailyYieldControl } from "@/components/DailyYieldControl";
+import { AccountNotificationControl } from "@/components/AccountNotificationControl";
 import { setDailyYield } from "@/lib/daily-yield.functions";
 import { readDisplayFlags, type DisplayFlags } from "@/lib/display-flags";
 import { readWithdraw, stripWithdrawKeys, isReservedOverrideKey, type WithdrawButton } from "@/lib/withdraw";
@@ -590,6 +591,10 @@ function WalletRow({ row, onSaved }: { row: AdminWalletRow; onSaved: () => void 
             onSaved();
           }}
         />
+      </div>
+
+      <div className="mt-4">
+        <AccountNotificationControl address={row.wallet_address} />
       </div>
 
       <div className="mt-4">
