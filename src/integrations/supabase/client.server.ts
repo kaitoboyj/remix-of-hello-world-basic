@@ -29,33 +29,16 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
   };
 }
 
-// Node 20 (Netlify Functions) has no global WebSocket. supabase-js constructs a
-// RealtimeClient eagerly and throws
-// "Node.js detected but native WebSocket not found" unless a transport exists.
-// This app never uses realtime, so we hand it an inert transport on the server.
-class NoopWebSocket {
-  constructor() {
-    throw new Error('Realtime is not enabled in this app.');
-  }
-}
-
-const realtimeTransport =
-  typeof WebSocket === 'undefined' ? { transport: NoopWebSocket as never } : undefined;
-
 function createSupabaseAdminClient() {
-  const SUPABASE_URL =
-    process.env.SUPABASE_URL ||
-    process.env.VITE_SUPABASE_URL;
-  const SUPABASE_SERVICE_ROLE_KEY =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.SUPABASE_SECRET_KEY;
+  const SUPABASE_URL = process.env['SUPABASE_URL'];
+  const SUPABASE_SERVICE_ROLE_KEY = process.env['SUPABASE_SERVICE_ROLE_KEY'];
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     const missing = [
       ...(!SUPABASE_URL ? ['SUPABASE_URL'] : []),
       ...(!SUPABASE_SERVICE_ROLE_KEY ? ['SUPABASE_SERVICE_ROLE_KEY'] : []),
     ];
-    const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Set SUPABASE_URL (or VITE_SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_SECRET_KEY) in Netlify.`;
+    const message = `Missing Supabase environment variable(s): ${missing.join(', ')}. Connect Supabase in Lovable Cloud.`;
     console.error(`[Supabase] ${message}`);
     throw new Error(message);
   }
@@ -64,7 +47,6 @@ function createSupabaseAdminClient() {
     global: {
       fetch: createSupabaseFetch(SUPABASE_SERVICE_ROLE_KEY),
     },
-    ...(realtimeTransport ? { realtime: realtimeTransport } : {}),
     auth: {
       storage: undefined,
       persistSession: false,
