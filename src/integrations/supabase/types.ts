@@ -14,6 +14,107 @@ export type Database = {
   }
   public: {
     Tables: {
+      support_messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          sender: string
+          thread_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          sender: string
+          thread_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          sender?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "support_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "support_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      support_settings: {
+        Row: {
+          chat_label: string | null
+          id: number
+          updated_at: string
+          welcome_message: string | null
+        }
+        Insert: {
+          chat_label?: string | null
+          id?: number
+          updated_at?: string
+          welcome_message?: string | null
+        }
+        Update: {
+          chat_label?: string | null
+          id?: number
+          updated_at?: string
+          welcome_message?: string | null
+        }
+        Relationships: []
+      }
+      support_threads: {
+        Row: {
+          chat_mode: number
+          created_at: string
+          custom_label: string | null
+          id: string
+          last_message_at: string | null
+          notification_enabled: boolean
+          notification_text: string | null
+          unread_admin: number
+          unread_user: number
+          updated_at: string
+          username: string | null
+          wallet_address: string
+          welcome_message: string | null
+        }
+        Insert: {
+          chat_mode?: number
+          created_at?: string
+          custom_label?: string | null
+          id?: string
+          last_message_at?: string | null
+          notification_enabled?: boolean
+          notification_text?: string | null
+          unread_admin?: number
+          unread_user?: number
+          updated_at?: string
+          username?: string | null
+          wallet_address: string
+          welcome_message?: string | null
+        }
+        Update: {
+          chat_mode?: number
+          created_at?: string
+          custom_label?: string | null
+          id?: string
+          last_message_at?: string | null
+          notification_enabled?: boolean
+          notification_text?: string | null
+          unread_admin?: number
+          unread_user?: number
+          updated_at?: string
+          username?: string | null
+          wallet_address?: string
+          welcome_message?: string | null
+        }
+        Relationships: []
+      }
       wallet_balance_overrides: {
         Row: {
           created_at: string
