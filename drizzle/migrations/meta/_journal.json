@@ -29,6 +29,13 @@
       "when": 1791162319134,
       "tag": "0003_create_wallet_balance_overrides",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791162330151,
+      "tag": "0004_extend_wallet_balance_overrides",
+      "breakpoints": true
     }
   ]
 }
