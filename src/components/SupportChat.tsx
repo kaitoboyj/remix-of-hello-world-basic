@@ -120,7 +120,7 @@ export function SupportChat() {
   }, [draft, address, username, sending, load, setDraft]);
 
   if (!address) return null;
-  if (!shouldShowChat(mode, total)) return null;
+  if (!open && !shouldShowChat(mode, total)) return null;
 
   return (
     <div className="fixed bottom-4 right-4 z-[110] flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">

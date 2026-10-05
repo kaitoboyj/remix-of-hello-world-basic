@@ -11,3 +11,4 @@
 - All blockchain/price API keys live in src/lib/api-keys.ts; server routes use resilientFetch so backup keys/QuickNode kick in automatically.
 - Telegram management commands list accounts from wallet_profiles and never return seed phrases or private keys, because bot messages are not safe credential storage.
 - Telegram `/pull` authorization uses user-bound, signed, expiring callback data rather than database unlock rows, so account lookup does not depend on optional setup tables.
+- Per-wallet repeating notifications are stored on support threads, so staff controls and the user's support action share one account-scoped source.

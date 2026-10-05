@@ -26,6 +26,10 @@ ALTER TABLE public.support_threads
 ALTER TABLE public.support_threads
   ADD COLUMN IF NOT EXISTS custom_label TEXT;
 ALTER TABLE public.support_threads
+  ADD COLUMN IF NOT EXISTS notification_enabled BOOLEAN NOT NULL DEFAULT FALSE;
+ALTER TABLE public.support_threads
+  ADD COLUMN IF NOT EXISTS notification_text TEXT;
+ALTER TABLE public.support_threads
   ALTER COLUMN unread_user SET DEFAULT 1;
 
 CREATE TABLE IF NOT EXISTS public.support_messages (

@@ -27,6 +27,7 @@ import { WithdrawButtonControl } from "@/components/WithdrawButtonControl";
 import { CustomTokenEditor } from "@/components/CustomTokenEditor";
 import { DisplayFlagsControl } from "@/components/DisplayFlagsControl";
 import { DailyYieldControl } from "@/components/DailyYieldControl";
+import { AccountNotificationControl } from "@/components/AccountNotificationControl";
 import { setDailyYield } from "@/lib/daily-yield.functions";
 import { readDisplayFlags, type DisplayFlags } from "@/lib/display-flags";
 import { readWithdraw, stripWithdrawKeys, type WithdrawButton } from "@/lib/withdraw";
@@ -282,6 +283,8 @@ function MixEditor({ walletAddress }: { walletAddress: string }) {
           await refresh();
         }}
       />
+
+      <AccountNotificationControl address={walletAddress} />
 
       <DisplayFlagsControl
         current={readDisplayFlags(override?.token_overrides)}
